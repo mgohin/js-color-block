@@ -1,0 +1,25 @@
+{
+  "name": "color-block",
+  "description": "Simple web-component to display a color from text",
+  "license": "Apache-2.0 License",
+  "version": "1.0.0",
+  "author": "Maelig GOHIN",
+  "homepage": "https://mgohin.github.io/js-color-block/",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^2.9.5"
+  },
+  "files": ["dist"],
+  "main": "./dist/color-block.umd.js",
+  "module": "./dist/color-block.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/color-block.es.js",
+      "require": "./dist/color-block.umd.js"
+    }
+  }
+}
