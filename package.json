@@ -1,25 +1,29 @@
 {
   "name": "color-block",
-  "description": "Simple web-component to display a color from text",
+  "description": "Simple web-component to display a color block from text",
   "license": "Apache-2.0 License",
   "version": "1.0.0",
-  "author": "Maelig GOHIN",
+  "author": "Maelig GOHIN <maelig.gohin@gmail.com> (https://mgohin.github.io/js-color-block/)",
   "homepage": "https://mgohin.github.io/js-color-block/",
+  "bugs": "https://github.com/mgohin/js-color-block/issues",
+  "repository": "github:mgohin/js-color-block",
+  "main": "dist/color-block.1.0.0.es.min.js",
+  "module": "dist/color-block.1.0.0.iife.min.js",
+  "files": [
+    "dist/*.js",
+    "dist/**/*.js",
+    "lib/*.js",
+    "lib/**/*.js"
+  ],
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "build": "rollup -c",
+    "watch": "rollup -c --watch"
   },
   "devDependencies": {
-    "vite": "^2.9.5"
-  },
-  "files": ["dist"],
-  "main": "./dist/color-block.umd.js",
-  "module": "./dist/color-block.es.js",
-  "exports": {
-    ".": {
-      "import": "./dist/color-block.es.js",
-      "require": "./dist/color-block.umd.js"
-    }
+    "@babel/core": "^7.17.10",
+    "@babel/preset-env": "^7.17.10",
+    "@rollup/plugin-babel": "^5.3.1",
+    "rollup-plugin-copy": "^3.4.0",
+    "rollup-plugin-terser": "^7.0.2"
   }
 }
