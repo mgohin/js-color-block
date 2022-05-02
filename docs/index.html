@@ -93,7 +93,13 @@
         it'll be a red cross.</p>
 
     <h1>Use it in your project</h1>
-    <p>You simply need to import js file (minified or not), it'll declare the webcomponent, you just have to use it now ;)</p>
+    Any kind of import will automatically declare the web-component, nothing to do.
+    <h3>Import module</h3>
+    <p>You can simply import the module in your root app module</p>
+    <pre><code class="language-js">import 'color-block';</code></pre>
+
+    <h3>Import script in your &lt;head&gt;</h3>
+    <p>Import js file (minified or not) in &lt;head&gt;</p>
     <pre><code class="language-html">&lt;head&gt;
     ...
     &lt;script nomodule src=&quot;node_modules/color-block/dist/color-block.X.Y.Z.iife.min.js&quot;&gt;&lt;/script&gt;
@@ -109,7 +115,7 @@
 <footer>
     Created by <a href="https://github.com/mgohin">Maelig</a> - doc/demo page built with ❤️<a
         href=">https://simplecss.org">simplecss.org</a> | ❤️<a
-        href="https://prismjs.com/">prismjs.com</a> - project built with ❤️<a href="https://vitejs.dev/">vitejs.dev</a>
+        href="https://prismjs.com/">prismjs.com</a> - project built with ❤️<a href="https://rollupjs.org/">rollupjs.org</a>
 </footer>
 </body>
 </html>
