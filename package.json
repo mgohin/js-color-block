@@ -2,7 +2,7 @@
   "name": "color-block",
   "description": "Simple web-component to display a color block from text",
   "license": "Apache-2.0 License",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": "Maelig GOHIN <maelig.gohin@gmail.com> (https://mgohin.github.io/js-color-block/)",
   "homepage": "https://mgohin.github.io/js-color-block/",
   "bugs": "https://github.com/mgohin/js-color-block/issues",
