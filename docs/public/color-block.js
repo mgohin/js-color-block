@@ -134,7 +134,7 @@ const getTemplate = () => {
             <span class="color"></span>
             <span class="copy"></span>
         </span>
-        <span class="color-text"></span>
+        <slot></slot>
         `;
   return template;
 };
@@ -471,7 +471,8 @@ class ColorBlockWebComponent extends HTMLElement {
     return [ColorAfterTextAttribute.ATTR_COLOR_AFTER_TEXT];
   }
 
-  _colorTextEl;
+  _slotEl;
+  _slotListener;
   _colorBlock;
   _colorAfterTextAttribute;
 
@@ -493,21 +494,34 @@ class ColorBlockWebComponent extends HTMLElement {
   }
 
   _bindElements() {
-    this._colorTextEl = this.shadowRoot.querySelector('.color-text');
+    this._slotEl = this.shadowRoot.querySelector('slot');
     this._colorBlock = new ColorBlock(this.shadowRoot.querySelector('.color-block'));
   }
 
   connectedCallback() {
-    setTimeout(() => {
-      const contentAsString = this.innerHTML;
-      this._colorTextEl.innerText = contentAsString;
+    this._slotListener = () => this._updateColor();
 
-      this._colorBlock.setColor(contentAsString);
-    });
+    this._slotEl.addEventListener('slotchange', this._slotListener);
+
+    this._updateColor();
+  }
+
+  _updateColor() {
+    const nodes = this._slotEl.assignedNodes();
+
+    const contentAsString = Array.from(nodes).map(node => node.textContent).join('');
+
+    this._colorBlock.setColor(contentAsString);
   }
 
   disconnectedCallback() {
     this._colorBlock.disconnect();
+
+    if (this._slotListener) {
+      this._slotEl.removeEventListener('slotchange', this._slotListener);
+
+      this._slotListener = null;
+    }
   }
 
   attributeChangedCallback(name, oldValue, newValue) {

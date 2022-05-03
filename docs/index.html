@@ -34,16 +34,12 @@
     <p>The component check if the value is a css variable (starting with '--'), if not check validity with <a
             href="https://developer.mozilla.org/en-US/docs/Web/API/CSS/supports">CSS.supports API</a></p>
     <div>
-        <color-block>--color-block-red</color-block>
-        <pre><code class="language-html">&lt;color-block&gt;--color-block-red&lt;/color-block&gt;</code></pre>
-    </div>
-    <div>
-        <color-block>#AA66DD</color-block>
+        <color-block><span>#AA66DD</span></color-block>
         <pre><code class="language-html">&lt;color-block&gt;#AA66DD&lt;/color-block&gt;</code></pre>
     </div>
     <div>
-        <color-block>blue</color-block>
-        <pre><code class="language-html">&lt;color-block&gt;blue&lt;/color-block&gt;</code></pre>
+        <color-block><span class="custom-color-text-display">blue</span></color-block>
+        <pre><code class="language-html">&lt;color-block&gt;&lt;span class=&quot;custom-color-text-display&quot;&gt;blue&lt;/span&gt;&lt;/color-block&gt;</code></pre>
     </div>
     <div>
         <color-block>hsl(9,100%,64%)</color-block>
@@ -63,8 +59,8 @@
         <pre><code class="language-html">&lt;color-block&gt;ABCD&lt;/color-block&gt;</code></pre>
     </div>
     <div>
-        <color-block><slot/></color-block>
-        <pre><code class="language-html">&lt;color-block&gt;&lt;slot/&gt;&lt;/color-block&gt;</code></pre>
+        <color-block></color-block>
+        <pre><code class="language-html">&lt;color-block&gt;&lt;/color-block&gt;</code></pre>
     </div>
 
     <h2>Options</h2>

@@ -1,3 +1,9 @@
 :root {
   --color-block-red: red;
 }
+
+.custom-color-text-display {
+  font-size: 1.25rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
