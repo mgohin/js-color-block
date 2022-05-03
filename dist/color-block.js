@@ -499,9 +499,10 @@ class ColorBlockWebComponent extends HTMLElement {
 
   connectedCallback() {
     setTimeout(() => {
-      this._colorTextEl.innerHTML = this.textContent;
+      const contentAsString = this.innerHTML;
+      this._colorTextEl.innerText = contentAsString;
 
-      this._colorBlock.setColor(this.textContent);
+      this._colorBlock.setColor(contentAsString);
     });
   }
 
