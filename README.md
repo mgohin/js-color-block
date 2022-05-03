@@ -12,7 +12,7 @@ What you get :
 
 ![example](images/example.png)
 
-Works with a lot of css colors, check the complete demo page.
+Works with a lot of css colors, **check the complete demo page for examples and install instructions**.
 
 ## DEMO
 
