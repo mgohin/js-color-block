@@ -8,15 +8,6 @@
           }
         }]
       ]
-    },
-    "iife": {
-      "presets": [
-        ["@babel/preset-env", {
-          "targets": {
-            "browsers": ["> 0.5%"]
-          }
-        }]
-      ]
     }
   }
 }

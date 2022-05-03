@@ -2,7 +2,7 @@
 
 # COLOR BLOCK
 
-Deadly simple web component to display a colored square.
+Deadly simple web component to display a colored square. No dependencies !
 
 What you write :
 ```html

@@ -7,13 +7,12 @@
   "homepage": "https://mgohin.github.io/js-color-block/",
   "bugs": "https://github.com/mgohin/js-color-block/issues",
   "repository": "github:mgohin/js-color-block",
-  "main": "dist/color-block.1.0.0.es.min.js",
-  "module": "dist/color-block.1.0.0.iife.min.js",
+  "type": "module",
+  "main": "dist/color-block.js",
+  "module": "dist/color-block.js",
   "files": [
     "dist/*.js",
-    "dist/**/*.js",
-    "lib/*.js",
-    "lib/**/*.js"
+    "dist/**/*.js"
   ],
   "scripts": {
     "build": "rollup -c",
@@ -23,7 +22,6 @@
     "@babel/core": "^7.17.10",
     "@babel/preset-env": "^7.17.10",
     "@rollup/plugin-babel": "^5.3.1",
-    "rollup-plugin-copy": "^3.4.0",
-    "rollup-plugin-terser": "^7.0.2"
+    "rollup-plugin-copy": "^3.4.0"
   }
 }
