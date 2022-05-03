@@ -5,9 +5,33 @@
  * Maelig GOHIN <maelig.gohin@gmail.com> (https://mgohin.github.io/js-color-block/)
  *
  */
+/**
+ * Global configuration object with default values.
+ *
+ * You can override anything you want.
+ * Just be sure to respect 'contracts' of each value.
+ *
+ * I'm a lazy dev, I did not check if you passed a function or a different type.
+ *
+ * @type {{clipboard: {validColorTitle: (function(*): string), invalidColorTitle: (function(*): string)}}}
+ */
 window.ColorBlockConfiguration = {
+  /**
+   * clipboard messages
+   */
   clipboard: {
+    /**
+     * title to display on the color block when the {@code value} is valid
+     * @param value {string} valid css color value
+     * @return {string} message to display
+     */
     validColorTitle: value => `click to copy value ${value}`,
+
+    /**
+     * title to display on the color block when the {@code value} is invalid
+     * @param value {string} invalid value
+     * @return {string} message to display
+     */
     invalidColorTitle: value => `${value} is an invalid color - click to copy value`
   }
 };
@@ -115,12 +139,27 @@ const getTemplate = () => {
   return template;
 };
 
+/**
+ * Builder to get a color parser.
+ * This is the entrypoint to create a ColorParser.
+ *
+ * @example
+ * ColorParserBuilder
+ *    .ifValid(value => checkIfValidValue(value))
+ *    .ifInvalid(value => parseValidValue(value));
+ *
+ * Note: Multiple private classes are used to force the
+ * developer to set ifValid and ifInvalid callbacks.
+ */
 class ColorParserBuilder {
   static ifValid(validCb) {
     return new ColorParserBuilderIfInvalid(validCb);
   }
 
 }
+/**
+ * Builder for ifInvalid callback
+ */
 
 class ColorParserBuilderIfInvalid {
   _validCb;
@@ -134,6 +173,10 @@ class ColorParserBuilderIfInvalid {
   }
 
 }
+/**
+ * Color parser
+ */
+
 
 class ColorParser {
   _validCb;
@@ -144,6 +187,13 @@ class ColorParser {
     this._validCb = validCb;
     this._invalidCb = invalidCb;
   }
+  /**
+   * Iterate through {@link parsers} to get a parser that
+   * can parse correctly the {@code value}.
+   *
+   * @param value {string} string to parse as a CSS color
+   */
+
 
   parse(value) {
     const parser = this.parsers.find(parser => parser.handle(value));
@@ -156,6 +206,15 @@ class ColorParser {
   }
 
 }
+/**
+ * Represents a specific parser.
+ *
+ * You can define your own.
+ * It predefines some parsers :
+ * - {@link CssVar}
+ * - {@link OtherCssColors}
+ */
+
 
 class ColorParserHandler {
   _handleCb;
@@ -165,18 +224,53 @@ class ColorParserHandler {
     this._handleCb = handleCb;
     this._parseCb = parseCb;
   }
+  /**
+   * Can this parser handle the {@code value} ?
+   *
+   * @param value {string} value to parse
+   * @return {boolean} true if the {@code value} car be formatted
+   */
+
 
   handle(value) {
     return this._handleCb(value);
   }
+  /**
+   * Format the {@code value}
+   *
+   * @param value {string} value to format
+   * @return {string} formatted value
+   */
+
 
   format(value) {
     return this._parseCb(value);
   }
+  /**
+   * Parser to handle css var color
+   *
+   * @example
+   * --my-custom-color
+   *
+   * @return {ColorParserHandler} the parser
+   */
+
 
   static CssVar() {
     return new ColorParserHandler(value => typeof value === 'string' && value.trim().startsWith('--'), value => `var(${value.trim()})`);
   }
+  /**
+   * Parser to handle css colors
+   *
+   * @example
+   * #AA66DD
+   * blue
+   * hsl(9,100%,64%)
+   * rgba(255,99,71,0.5)
+   *
+   * @return {ColorParserHandler} the parser
+   */
+
 
   static OtherCssColors() {
     return new ColorParserHandler(value => typeof value === 'string' && CSS.supports('color', value.trim()), value => value.trim());
@@ -184,31 +278,46 @@ class ColorParserHandler {
 
 }
 
+/**
+ * Handler for clipboard copy on a {@link ColorBlock}
+ */
 class CopyToClipboard {
   _colorBlockEl;
   _clickListener;
+  /**
+   * @constructor
+   * @param colorBlock {ColorBlock} ColorBlock to attach the copy interaction
+   */
 
   constructor(colorBlock) {
     this._colorBlockEl = colorBlock.getElement();
   }
+  /**
+   * Set 'valid' title on the block and bind the copy interaction
+   * @param value {string} valid value to copy
+   */
+
 
   bindValid(value) {
     this._colorBlockEl.setAttribute('title', ColorBlockConfiguration.clipboard.validColorTitle(value));
 
     this._bind(value);
   }
+  /**
+   * Set 'invalid' title on the block and bind the copy interaction
+   * @param value {string} valid value to copy
+   */
+
 
   bindInvalid(value) {
     this._colorBlockEl.setAttribute('title', ColorBlockConfiguration.clipboard.invalidColorTitle(value));
 
     this._bind(value);
   }
+  /**
+   * Remove bound listener to clean things up
+   */
 
-  _bind(value) {
-    this._clickListener = () => this._copyToClipBoard(value);
-
-    this._colorBlockEl.addEventListener('click', this._clickListener);
-  }
 
   unbind() {
     if (this._clickListener) {
@@ -216,6 +325,12 @@ class CopyToClipboard {
 
       this._clickListener = null;
     }
+  }
+
+  _bind(value) {
+    this._clickListener = () => this._copyToClipBoard(value);
+
+    this._colorBlockEl.addEventListener('click', this._clickListener);
   }
 
   _clearCopyState() {
@@ -256,8 +371,16 @@ class CopyToClipboard {
 
 }
 
+/**
+ * Represents the color block itself
+ * with its color parser and interactions
+ */
+
 class ColorBlock {
   _htmlEl;
+  _colorEl;
+  _copyToClipboard;
+  _colorParser;
 
   constructor(htmlEl) {
     this._htmlEl = htmlEl;
@@ -292,6 +415,13 @@ class ColorBlock {
 
 }
 
+/**
+ * Handler for input property 'color-after-text'
+ * that can be used on the web component to
+ * move the color block after the text.
+ *
+ * By default, the color block is before the text, sexier that way.
+ */
 class ColorAfterTextAttribute {
   static ATTR_COLOR_AFTER_TEXT = 'color-after-text';
   _shadowRoot;
@@ -301,6 +431,14 @@ class ColorAfterTextAttribute {
     this._shadowRoot = shadowRoot;
     this._colorBlockEl = colorBlock.getElement();
   }
+  /**
+   * Looks like an attribute changed, so check it
+   * and move the color block in consequences.
+   *
+   * @param name {string} changed attribute name
+   * @param value {string} attribute's value
+   */
+
 
   onAttributeChanged(name, value) {
     if (!this._handle(name)) {
@@ -320,12 +458,20 @@ class ColorAfterTextAttribute {
 
 }
 
+/**
+ * Represents the web component itself.
+ *
+ * One input is available :
+ *  - color-after-text : if 'true', it'll move the color block after the text.
+ *      By default, the color block is before the text
+ */
+
 class ColorBlockWebComponent extends HTMLElement {
   static get observedAttributes() {
     return [ColorAfterTextAttribute.ATTR_COLOR_AFTER_TEXT];
   }
 
-  _colorText;
+  _colorTextEl;
   _colorBlock;
   _colorAfterTextAttribute;
 
@@ -347,13 +493,13 @@ class ColorBlockWebComponent extends HTMLElement {
   }
 
   _bindElements() {
-    this._colorText = this.shadowRoot.querySelector('.color-text');
+    this._colorTextEl = this.shadowRoot.querySelector('.color-text');
     this._colorBlock = new ColorBlock(this.shadowRoot.querySelector('.color-block'));
   }
 
   connectedCallback() {
     setTimeout(() => {
-      this._colorText.innerHTML = this.textContent;
+      this._colorTextEl.innerHTML = this.textContent;
 
       this._colorBlock.setColor(this.textContent);
     });
