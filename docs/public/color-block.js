@@ -1,7 +1,7 @@
 /**
 *
  * color-block
- * 1.0.0
+ * 1.0.4
  * Maelig GOHIN <maelig.gohin@gmail.com> (https://mgohin.github.io/js-color-block/)
  *
  */
