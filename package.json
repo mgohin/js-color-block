@@ -12,7 +12,7 @@
   "module": "dist/color-block.js",
   "files": [
     "dist/*.js",
-    "dist/**/*.js"
+    "dist/*.map"
   ],
   "scripts": {
     "build": "rollup -c",
